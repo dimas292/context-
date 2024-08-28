@@ -1,18 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
 
-	num := 6
+	names := []string{"Nobee", "bee", "go", "Nodejs"}
 
-	if num %2 > 0{
-		fmt.Println("ini bilangan ganjil")
-		defer cetak("akan berakhir setelah proccess selesai ")
+	for _, name := range names {
+		if name == "go"{
+			os.Exit(1)
+		}
+		cetak(name)
 	}
-
-	cetak("oh tentu tidak, defer akan dieksekusi setelah ini")
-	
 }
 
 func cetak(text string){
