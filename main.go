@@ -1,56 +1,30 @@
 package main
 
 import (
-	"errors"
 	"fmt"
+	"log"
+	"net/http"
+	"time"
 )
 
-type Student struct {
-	Name   string
-	Height int
+func index(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("index called ...")
+	time := time.Now()
+	w.Write([]byte(fmt.Sprint(time.Hour(), ":", time.Minute())))
 }
 
-func (s *Student) Validate() error {
-
-	if s.Name == "" {
-		return errors.New("nama tidak boleh kosong")
-	}
-
-	if len(s.Name) <= 3 {
-		panic("nama harus lebih besar dari 3")
-	}
-
-	if s.Height == 0 {
-		return errors.New("tinggi tidak boleh kosong")
-	}
-
-	return nil
-
+func handleFunc() {
+	http.HandleFunc("/", index)
 }
 
 func main() {
-	defer catchError()
-	student := Student{Name: "dim", Height: 18}
 
-	err := student.Validate()
-	if err != nil {
-		cetak(err.Error())
-	} else {
-		cetak("hello  " + student.Name)
-	}
-
+	port := ":9000"
+	handleFunc()
+	startServer(port)
 }
 
-
-func cetak(text string) {
-	fmt.Println(text)
+func startServer(port string) {
+	log.Printf("server running at port %v\n", port)
+	http.ListenAndServe(port, nil)
 }
-
-func catchError() {
-	err := recover()
-
-	if err != nil {
-		cetak("error nih : " + fmt.Sprint(err))
-	}
-}
-
