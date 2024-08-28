@@ -11,19 +11,24 @@ type User struct{
 }
 
 func main(){
-	users := []User{
-		{Name: "Dimas", Class: "6A"},
-		{Name: "Java", Class: "7A"},
-		{Name: "Nodejs", Class: "5A"},
-	}
+	var users []User
 
-	userJson, err := json.Marshal(users)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	fmt.Println("bentuk json : ", string(userJson))
+	fmt.Println("users saat ini : ", len(users))
 	
-
+	dataDariFrontEnd := `{"Name": "Dimas", "Class": "B"}`
+	
+	data := []byte(dataDariFrontEnd)
+	
+	var user User
+	
+	err := json.Unmarshal(data, &user)
+	
+	if err != nil {
+		fmt.Println("error saat encoding")
+	}
+	
+	users = append(users, user)
+	
+	fmt.Println("users saat ini : ", len(users))
+	fmt.Println("data user -> : " , users)
 }
