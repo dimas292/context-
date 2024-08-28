@@ -1,30 +1,29 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"log"
-	"net/http"
-	"time"
 )
 
-func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("index called ...")
-	time := time.Now()
-	w.Write([]byte(fmt.Sprint(time.Hour(), ":", time.Minute())))
+type User struct{
+	Name string
+	Class string
 }
 
-func handleFunc() {
-	http.HandleFunc("/", index)
-}
+func main(){
+	users := []User{
+		{Name: "Dimas", Class: "6A"},
+		{Name: "Java", Class: "7A"},
+		{Name: "Nodejs", Class: "5A"},
+	}
 
-func main() {
+	userJson, err := json.Marshal(users)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 
-	port := ":9000"
-	handleFunc()
-	startServer(port)
-}
+	fmt.Println("bentuk json : ", string(userJson))
+	
 
-func startServer(port string) {
-	log.Printf("server running at port %v\n", port)
-	http.ListenAndServe(port, nil)
 }
