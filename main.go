@@ -1,34 +1,20 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"defer/route"
+	"log"
+	"net/http"
 )
 
-type User struct{
-	Name string
-	Class string
-}
+var (
+	APP_PORT = ":4000"
+)
 
 func main(){
-	var users []User
 
-	fmt.Println("users saat ini : ", len(users))
-	
-	dataDariFrontEnd := `{"Name": "Dimas", "Class": "B"}`
-	
-	data := []byte(dataDariFrontEnd)
-	
-	var user User
-	
-	err := json.Unmarshal(data, &user)
-	
-	if err != nil {
-		fmt.Println("error saat encoding")
-	}
-	
-	users = append(users, user)
-	
-	fmt.Println("users saat ini : ", len(users))
-	fmt.Println("data user -> : " , users)
+	route.SetUp()
+
+	log.Printf("server runnng at port %v\n", APP_PORT)
+	http.ListenAndServe(APP_PORT, nil)
 }
+
