@@ -13,7 +13,6 @@ var (
 func main(){
 
 	route.SetUp()
-
 	log.Printf("server runnng at port %v\n", APP_PORT)
 	http.ListenAndServe(APP_PORT, nil)
 }
